@@ -66,5 +66,124 @@ Der **Konstruktor** erzeugt ein Objekt der Klasse.
 
 Beispiel:
 
-```j
+```java
+private LazySingleton() {
+}
 ```
+
+Beim Singleton ist der Konstruktor **private**, damit keine neuen Objekte außerhalb der Klasse erstellt werden können.
+
+---
+
+## static
+
+`static` bedeutet, dass eine Variable oder Methode zur **Klasse selbst** gehört und nicht zu einem Objekt.
+
+Beispiel:
+
+```java
+private static LazySingleton instance;
+```
+
+Dadurch existiert diese Instanz **nur einmal für die gesamte Klasse**.
+
+---
+
+## Zugriffsmethode
+
+Da der Konstruktor privat ist, braucht man eine Methode, um auf die Instanz zuzugreifen.
+
+Diese Methode ist meistens:
+
+```java
+public static LazySingleton getInstance()
+```
+
+Sie gibt die einzige Instanz zurück.
+
+---
+
+# 4. Eager Singleton
+
+Beim **Eager Singleton** wird die Instanz **sofort beim Laden der Klasse erzeugt**.
+
+Beispiel:
+
+```java
+private static final EagerSingleton instance = new EagerSingleton();
+```
+
+### Vorteile
+
+* einfache Implementierung
+* automatisch thread-safe
+
+### Nachteile
+
+* Objekt wird erstellt, auch wenn es **nie benutzt wird**
+
+---
+
+# 5. Lazy Singleton
+
+Beim **Lazy Singleton** wird die Instanz **erst erstellt, wenn sie benötigt wird**.
+
+Beispiel:
+
+```java
+if (instance == null) {
+    instance = new LazySingleton();
+}
+```
+
+### Vorteile
+
+* spart Ressourcen
+* Objekt wird nur erstellt, wenn es gebraucht wird
+
+### Nachteile
+
+* einfache Variante ist **nicht thread-safe**
+
+---
+
+# 6. Demonstration im Programm
+
+In der `Main`-Klasse werden beide Implementierungen aufgerufen.
+
+Beispiel:
+
+```java
+EagerSingleton eager = EagerSingleton.getInstance();
+LazySingleton lazy = LazySingleton.getInstance();
+```
+
+Die Konsolenausgabe zeigt:
+
+* **EagerSingleton wird sofort erstellt**
+* **LazySingleton erst beim ersten Zugriff**
+
+---
+
+# 7. Überprüfung des Singleton-Prinzips
+
+Im Programm werden zwei Instanzen verglichen:
+
+```java
+if (lazy == lazy2)
+```
+
+Wenn beide Variablen auf dasselbe Objekt im Speicher zeigen, bestätigt das die Singleton-Eigenschaft.
+
+---
+
+# 8. Fazit
+
+Der Unterschied zwischen den beiden Varianten liegt hauptsächlich im **Zeitpunkt der Erstellung**.
+
+| Variante        | Zeitpunkt der Erstellung     |
+| --------------- | ---------------------------- |
+| Eager Singleton | sofort beim Laden der Klasse |
+| Lazy Singleton  | erst beim ersten Zugriff     |
+
+Beide Varianten stellen sicher, dass **nur eine Instanz der Klasse existiert**.
